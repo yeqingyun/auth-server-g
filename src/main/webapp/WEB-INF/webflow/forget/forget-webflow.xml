@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns="http://www.springframework.org/schema/webflow"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+    <!--判断来源请求是否包含验证参数，包含有效参数则跳转入改密码页面，包含无效参数则跳转到改密首页并提示超时，无参数则无提示跳转改密首页-->
+    <decision-state id="chose">
+        <on-entry>
+            <evaluate expression="forgetAction.setURL(flowRequestContext)"/>
+        </on-entry>
+        <if test="forgetAction.validateConfirmURL(flowRequestContext)" then="viewChangePage"
+            else="viewForgetPhonePage"/>
+    </decision-state>
+
+    <!--==========================邮件改密流程=====================================-->
+
+    <!--邮件改密首页-->
+    <view-state id="viewForgetEmailPage" view="pwdForgetEmail">
+        <on-entry>
+            <evaluate expression="forgetAction.setURL(flowRequestContext)"/>
+        </on-entry>
+        <transition on="phone" to="viewForgetPhonePage"/>
+        <transition on="submit" to="checkUserNameAndEmail"/>
+    </view-state>
+
+    <!--验证账户与邮箱，正确发送校验邮件，错误返回改密首页-->
+    <decision-state id="checkUserNameAndEmail">
+        <if test="forgetAction.checkUsernameAndEmail(flowRequestContext)" then="sendConfirmEmail"
+            else="viewForgetEmailPage"/>
+    </decision-state>
+
+    <!--发送校验邮件，成功跳转结束，失败返回改密首页-->
+    <action-state id="sendConfirmEmail">
+        <evaluate expression="forgetAction.sendConfirmMail(flowRequestContext)"/>
+        <transition on="success" to="viewResult"/>
+        <transition on="fail" to="viewForgetEmailPage"/>
+    </action-state>
+
+    <!--===========================手机改密流程===================================-->
+
+    <!--手机改密-->
+    <view-state id="viewForgetPhonePage" view="pwdForgetPhone">
+        <transition on="email" to="viewForgetEmailPage"/>
+        <transition on="submit" to="checkUserNameAndPhone"/>
+    </view-state>
+
+    <!--验证账户与手机，正确跳转验证码页面-->
+    <decision-state id="checkUserNameAndPhone">
+        <on-entry>
+            <evaluate expression="forgetAction.setURL(flowRequestContext)"/>
+        </on-entry>
+        <if test="forgetAction.checkUsernameAndPhone(flowRequestContext)" then="viewSendConfirmSMS"
+            else="viewForgetPhonePage"/>
+    </decision-state>
+
+    <!--手机验证码-->
+    <view-state id="viewSendConfirmSMS" view="pwdSMS">
+        <on-entry>
+            <!--进页面发送验证码，刷新页面即重复发送-->
+            <evaluate expression="forgetAction.sendConfirmSMS(flowRequestContext)"/>
+        </on-entry>
+        <transition on="send" to="viewSendConfirmSMS"/>
+        <transition on="submit" to="confirmSMS"/>
+    </view-state>
+
+
+    <!--校验手机验证码、通过则修改密码-->
+    <decision-state id="confirmSMS">
+        <if test="forgetAction.validateSMS(flowRequestContext)" then="viewChangePage" else="viewSendConfirmSMS"/>
+    </decision-state>
+
+    <!--===========================邮件/短信验证通过之后===================================-->
+
+    <!--验证通过，改密码页面-->
+    <view-state id="viewChangePage" view="pwdChange">
+        <transition on="submit" to="changePassword"/>
+    </view-state>
+
+    <!--重置密码-->
+    <action-state id="changePassword">
+        <evaluate expression="forgetAction.changePassword(flowRequestContext)"/>
+        <transition on="success" to="viewResult"/>
+        <transition on="fail" to="viewChangePage"/>
+    </action-state>
+
+    <end-state id="viewResult" view="pwdResult"/>
+
+</flow>

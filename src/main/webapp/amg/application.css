@@ -1,0 +1,114 @@
+*:focus {
+  outline: none; }
+
+body {
+  font-family: Arial, "Microsoft YaHei", SimHei, sans-serif !important;
+  background-color: !important; }
+
+.logo {
+  margin: 20px 0; }
+
+.banner {
+  width: 100%;
+  height: 410px;
+  background: #f88829; }
+
+.showing {
+  height: 410px;
+  width: 100%;
+  background: #f88829 url(bg.png) no-repeat center; }
+  .showing .showing-ad img {
+    height: 410px; }
+
+.login {
+  background: #fff;
+  margin: 20px !important;
+  padding: 20px !important;
+  border: 1px solid #eee;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 2px; }
+  .login .login-head {
+    text-align: center; }
+    .login .login-head #msg, .login .login-head #clientmsg {
+      margin: 12px 0; }
+  .login .login-form {
+    margin-top: 30px; }
+    .login .login-form .login-account, .login .login-form .login-pass {
+      height: 40px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 2px; }
+      .login .login-form .login-account input, .login .login-form .login-pass input {
+        height: 35px;
+        width: calc(100% - 50px);
+        border: transparent !important;
+        line-height: 30px; }
+    .login .login-form .login-account-image {
+      float: left;
+      width: 35px;
+      height: 35px;
+      background: url(account.png) no-repeat center;
+      margin-top: 2px; }
+    .login .login-form .login-pass-image {
+      float: left;
+      width: 35px;
+      height: 35px;
+      background: url(pass.png) no-repeat center;
+      margin-top: 2px; }
+    .login .login-form .login-code {
+      height: 40px;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 2px;
+      position: relative; }
+      .login .login-form .login-code input {
+        height: 35px;
+        width: calc(100%-150px);
+        margin-left: 10px;
+        display: inline-block;
+        border: transparent !important;
+        line-height: 33px; }
+      .login .login-form .login-code .login-code-image {
+        padding: 5px;
+        height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 0px; }
+    .login .login-form .login-remember .login-forgetpass {
+      float: right; }
+      .login .login-form .login-remember .login-forgetpass a {
+        color: #f88829;
+        text-decoration: none; }
+        .login .login-form .login-remember .login-forgetpass a:hover, .login .login-form .login-remember .login-forgetpass a:visited {
+          color: #d87420; }
+    .login .login-form .login-autologin span {
+      cursor: pointer; }
+    .login .login-form .login-submit {
+      margin-top: 20px; }
+      .login .login-form .login-submit input {
+        width: 100%;
+        color: #fff;
+        display: inline-block;
+        padding: 10px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1.428571429;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-user-select: none;
+        background-color: #f88829; }
+        .login .login-form .login-submit input:hover {
+          background-color: #d87420; }
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #777; }

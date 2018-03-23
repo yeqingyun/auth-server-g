@@ -1,0 +1,17 @@
+stages:
+  - build
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settgins.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  key: "$CI_BUILD_STAGE"
+  paths:
+    - .m2/repository/
+
+build:
+  image: maven:3.5.2-jdk-8
+  script:
+    - mvn $MAVEN_CLI_OPTS compile
+  stage: build

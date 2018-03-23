@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Specify the refresh internal in seconds. -->
+<Configuration monitorInterval="60">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %p [%c] - &lt;%m&gt;%n"/>
+        </Console>
+        <RollingFile name="file" fileName="/data/logs/cas.log" append="true"
+                     filePattern="/data/logs/cas-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout pattern="%d %p [%c] - %m%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="perfFileAppender" fileName="/data/logs/perfStats.log" append="true"
+                     filePattern="/data/logs/perfStats-%d{yyyy-MM-dd-HH}-%i.log">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="org.jasig.cas.web.view.CasReloadableMessageBundle" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.springframework.core.env.PropertySourcesPropertyResolver" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.mchange.v2" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.springframework.data.redis.core.RedisConnectionUtils" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.quartz.core" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.springframework" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.gionee.cas.throttle" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.jasig.cas.util.CasSpringBeanJobFactory" level="error">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.jasig.cas" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncLogger name="perfStatsLogger" level="error" additivity="false" includeLocation="true">
+            <AppenderRef ref="perfFileAppender"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.jasig.inspektr.audit.support" level="debug" includeLocation="true">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncLogger>
+        <AsyncRoot level="debug">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

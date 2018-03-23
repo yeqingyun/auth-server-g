@@ -1,0 +1,26 @@
+{
+  "@class": "org.jasig.cas.services.RegexRegisteredService",
+  "serviceId": "^(http|https)://gncrm.go.gionee.com(:\\d*)*(.*).*$",
+  "name": "GIONEE SERVICES",
+  "id": 10000003,
+  "description": "This service definition authorized all supported gionee services.",
+  "evaluationOrder": 10000,
+  "usernameAttributeProvider": {
+    "@class": "org.jasig.cas.services.DefaultRegisteredServiceUsernameProvider"
+  },
+  "logoutType": "BACK_CHANNEL",
+  "logoutUrl": "http://gncrm.go.gionee.com/logout/cas",
+  "attributeReleasePolicy": {
+    "@class": "org.jasig.cas.services.ReturnAllAttributeReleasePolicy",
+    "principalAttributesRepository": {
+      "@class": "org.jasig.cas.authentication.principal.DefaultPrincipalAttributesRepository"
+    },
+    "authorizedToReleaseCredentialPassword": false,
+    "authorizedToReleaseProxyGrantingTicket": false
+  },
+  "accessStrategy": {
+    "@class": "org.jasig.cas.services.DefaultRegisteredServiceAccessStrategy",
+    "enabled": true,
+    "ssoEnabled": true
+  }
+}

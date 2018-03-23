@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder properties-ref="casProperties"/>
+
+    <alias name="tgcCipherExecutor" alias="defaultCookieCipherExecutor"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          p:driverClassName="${db.driver}">
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="maxWaitMillis" value="600000"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="validationQuery" value="select 1"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+        <property name="removeAbandonedOnBorrow" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/>
+    </bean>
+
+    <bean id="queryDatabaseAuthenticationHandler"
+          class="com.gionee.cas.adaptors.jdbc.QueryDatabaseAuthenticationCompatWechatLoginHandler"
+          p:dataSource-ref="dataSource">
+    </bean>
+
+    <bean id="defaultPasswordEncoder" class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder">
+        <constructor-arg name="encodingAlgorithm" value="${cas.authn.password.encoding.alg}"/>
+    </bean>
+
+    <bean id="proxyAuthenticationHandler"
+          class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"/>
+
+    <bean id="authenticationManager" class="org.jasig.cas.authentication.PolicyBasedAuthenticationManager">
+        <constructor-arg ref="authenticationHandlersResolvers"/>
+        <property name="authenticationPolicy">
+            <bean class="org.jasig.cas.authentication.AnyAuthenticationPolicy"/>
+        </property>
+    </bean>
+
+    <bean id="personDirectoryPrincipalResolver"
+          class="org.jasig.cas.authentication.principal.PersonDirectoryPrincipalResolver"
+          p:attributeRepository-ref="attributeRepository">
+    </bean>
+
+    <bean id="attributeRepository"
+          class="org.jasig.services.persondir.support.jdbc.SingleRowJdbcPersonAttributeDao">
+        <constructor-arg index="0" ref="dataSource"/>
+        <constructor-arg index="1" value="${cas.jdbc.person.attribute.sql}"/>
+        <property name="queryAttributeMapping">
+            <map>
+                <entry key="username" value="login"/>
+            </map>
+        </property>
+        <property name="resultAttributeMapping">
+            <map>
+                <entry key="login" value="userId"/>
+                <entry key="id" value="globalId"/>
+            </map>
+        </property>
+    </bean>
+
+    <alias name="queryDatabaseAuthenticationHandler" alias="primaryAuthenticationHandler"/>
+    <alias name="personDirectoryPrincipalResolver" alias="primaryPrincipalResolver"/>
+    <alias name="casJwtCredentialAuthenticationHandler" alias="secondAuthenticationHandler"/>
+
+    <alias name="dataSource" alias="queryDatabaseDataSource"/>
+    <alias name="defaultPasswordEncoder" alias="passwordEncoder"/>
+
+    <util:list id="authenticationMetadataPopulators">
+        <ref bean="successfulHandlerMetaDataPopulator"/>
+        <ref bean="rememberMeAuthenticationMetaDataPopulator"/>
+    </util:list>
+
+    <alias name="serviceThemeResolver" alias="themeResolver"/>
+
+    <alias name="jsonServiceRegistryDao" alias="serviceRegistryDao"/>
+
+    <!--<alias name="defaultTicketRegistry" alias="ticketRegistry"/>-->
+    <alias name="redisTicketRegistry" alias="ticketRegistry"/>
+
+    <alias name="rememberMeDelegatingExpirationPolicy" alias="grantingTicketExpirationPolicy"/>
+    <alias name="timeoutExpirationPolicy" alias="rememberMeExpirationPolicy"/>
+    <alias name="ticketGrantingTicketExpirationPolicy" alias="sessionExpirationPolicy"/>
+
+    <alias name="multiTimeUseOrTimeoutExpirationPolicy" alias="serviceTicketExpirationPolicy"/>
+
+    <alias name="anyAuthenticationPolicy" alias="authenticationPolicy"/>
+    <alias name="acceptAnyAuthenticationPolicyFactory" alias="authenticationPolicyFactory"/>
+
+    <bean id="auditTrailManager"
+          class="org.jasig.inspektr.audit.support.Slf4jLoggingAuditTrailManager"
+          p:entrySeparator="${cas.audit.singleline.separator:|}"
+          p:useSingleLine="${cas.audit.singleline:false}"/>
+
+    <alias name="redisIpThrottle" alias="authenticationThrottle"/>
+
+    <util:list id="monitorsList">
+        <ref bean="memoryMonitor"/>
+        <ref bean="sessionMonitor"/>
+    </util:list>
+
+    <alias name="defaultPrincipalFactory" alias="principalFactory"/>
+    <alias name="defaultAuthenticationTransactionManager" alias="authenticationTransactionManager"/>
+    <alias name="defaultPrincipalElectionStrategy" alias="principalElectionStrategy"/>
+
+    <util:map id="authenticationHandlersResolvers">
+        <entry key-ref="proxyAuthenticationHandler" value-ref="proxyPrincipalResolver"/>
+        <entry key-ref="queryDatabaseAuthenticationHandler" value-ref="primaryPrincipalResolver"/>
+        <entry key-ref="secondAuthenticationHandler" value-ref="primaryPrincipalResolver"/>
+    </util:map>
+
+    <bean id="proxyPrincipalResolver"
+          class="org.jasig.cas.authentication.principal.BasicPrincipalResolver"/>
+
+</beans>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:beans="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="classpath:inspektr-jdbc-audit-config.xml"/>
+
+    <beans:property-placeholder location="classpath:cas.properties"/>
+
+    <mvc:component-scan base-package="org.jasig.cas.rest,com.gionee.cas.ticket"/>
+
+    <bean id="captchaEvaluator" class="com.gionee.cas.webflow.CaptchaEvaluator"/>
+
+    <bean id="compatAppRedisCacheCleaner" class="com.gionee.cas.webflow.CompatAppRedisCacheCleaner"
+          p:flowExecutionKeyCache-ref="flowExecutionKeyCache"/>
+
+    <bean id="eoaUrlHolder" class="com.gionee.cas.util.EoaConfiguration" p:eoaUrl="${eoa.url}"/>
+
+    <beans:component-scan base-package="com.gionee.cas.throttle"/>
+
+    <alias alias="defaultLoginThrottleInfo" name="redisLoginThrottleInfo"/>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" p:maxIdle="${redis.maxIdle}"
+          p:minIdle="${redis.minIdle}"
+          p:testOnBorrow="${redis.testOnBorrow}" p:maxTotal="${redis.maxTotal}"
+          p:maxWaitMillis="${redis.maxWaitMillis}"/>
+
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${redis.host}" p:port="${redis.port}"
+          p:database="${redis.database}"
+          p:poolConfig-ref="jedisPoolConfig"/>
+
+    <bean id="flowExecutionKeyCache" class="org.springframework.webflow.executor.FlowExecutionKeyRedisTemplate"
+          p:connectionFactory-ref="jedisConnectionFactory"/>
+
+
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="userHandler" class="org.jasig.cas.adaptors.jdbc.QueryUserHandler">
+        <!--用户鉴权库-->
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+        <!--查询用户手机号/邮箱库-->
+        <property name="jdbcTemplateHr">
+            <bean class="org.springframework.jdbc.core.JdbcTemplate">
+                <property name="dataSource" >
+                    <bean id="dataSourceHr" class="org.apache.commons.dbcp2.BasicDataSource"
+                          p:driverClassName="${db.driver}">
+                        <property name="url" value="${db.hr.url}"/>
+                        <property name="username" value="${db.username}"/>
+                        <property name="password" value="${db.password}"/>
+                        <property name="maxWaitMillis" value="600000"/>
+                        <property name="testOnBorrow" value="true"/>
+                        <property name="validationQuery" value="select 1"/>
+                        <property name="testWhileIdle" value="true"/>
+                        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+                        <property name="removeAbandonedOnBorrow" value="true"/>
+                        <property name="removeAbandonedTimeout" value="180"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <!--默认的密码加密方式-->
+        <property name="passwordEncoder" ref="defaultPasswordEncoder"/>
+    </bean>
+
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${mail.host}"/>
+        <property name="username" value="${mail.usrname}"/>
+        <property name="password" value="${mail.password}"/>
+        <property name="port" value="${mail.port}"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">${mail.transport.protocol}</prop>
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.debug">${mail.debug}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

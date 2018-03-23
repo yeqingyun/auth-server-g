@@ -1,0 +1,251 @@
+@charset "utf-8";
+/* CSS Document */
+body,ul,ol,li,dl,dt,dd,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,tr,input,select{ margin:0; padding:0;}
+input,a{
+	border:none;
+}
+body{
+	background:url(../xst/bodybg.jpg) 0 0 no-repeat;
+	background-color:#FFF;
+	font:14px/1.5 "微软雅黑",Tahoma,Arial,Sans-serif;
+	color:#7f7f7f;
+}
+.login-body{
+	margin:0 auto;
+	width:100%;
+	height:auto;
+	overflow:visible;
+}
+.h74{
+	height:74px;
+}
+ol, ul, li {
+	list-style: none outside none;
+}
+.fl{
+	float:left;
+}
+/*login-header*/
+.login-header{
+	height:60px;
+	width:1000px;
+}
+.login-header h1{
+	margin:11px 0 0 39px;
+}
+/*login-middle*/
+.poster{
+	float:left;
+	width:463px;
+	margin:192px 0 0 108px;
+}
+.login-middle{
+	width:1000px;
+	height:485px;
+	margin:0 auto;
+	position:relative;
+}
+.login-log{
+	position:absolute;
+	right:0;
+	top:60px;
+	width:281px;
+	height:425px;
+	padding:0 17px;
+	background:url(../xst/login-bg.png) 0 0 no-repeat;
+}
+.input-com {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	border-color: #e7e7e7;
+	border-image: none;
+	border-style: solid;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	border-width: 1px 1px 0;
+	z-index: 21;
+	height:47px;
+	position:relative;
+}
+.input-com-t {
+	height:47px;
+	position:relative;
+}
+.username {
+
+}
+.password {
+	margin-top:12px;
+}
+.verify {
+	margin-top:12px;
+}
+.pass-label {
+	background:url(../xst/user.png) 0 0 no-repeat;
+	display:block;
+	color: #666;
+	font-size: 14px;
+	height: 23px;
+	left: 12px;
+	top: 10px;
+	position: absolute;
+	z-index: 999;
+	padding-bottom: 10px;
+	padding-left: 27px;
+}
+.password-label {
+	background:url(../xst/password.png) 0 0 no-repeat;
+	display:block;
+	color: #666;
+	font-size: 14px;
+	height: 23px;
+	left: 12px;
+	top: 10px;
+	position: absolute;
+	z-index: 999;
+	padding-bottom: 10px;
+	padding-left: 27px;
+}
+.verify-label {
+	background:url(../xst/verify.png) 0 0 no-repeat;
+	display:block;
+	color: #666;
+	font-size: 14px;
+	height: 23px;
+	left: 12px;
+	top: 10px;
+	position: absolute;
+	z-index: 999;
+	padding-bottom: 10px;
+	padding-left: 27px;
+}
+.login-input {
+	border: 1px solid #dedede;
+	border-width: 0 1px 1px 0;
+	color: #666;
+	display: block;
+	font-size: 14px;
+	height: 47px;
+	line-height: 30px;
+	padding: 7px 10px 7px 50px;
+	position: relative;
+	width: 280px;
+	z-index: 17;
+}
+.w121{
+	width:121px;
+}
+.w62{
+	width:62px;
+}
+.login-input-t {
+	border: 1px solid #dedede;
+	border-width: 1px;
+	color: #666;
+	display: block;
+	font-size: 14px;
+	height: 47px;
+	line-height: 30px;
+	padding: 7px 10px 7px 50px;
+	position: relative;
+	width: 170px;
+	z-index: 17;
+}
+
+.pass-verifyCode {
+	border: 1px solid #ddd;
+	float: left;
+	height: 33px;
+	margin: 7px 0 0 14px;
+	width: 93px;
+}
+.change-verifyCode {
+	float: left;
+	font-size:12px;
+	font-family:"宋体";
+	color:#1b44d8;
+	margin: 17px 0 0 10px;
+	cursor:pointer;
+}
+.remeber{
+	margin:10px 0 0 0 ;
+}
+.remeber-input{
+	position: relative;
+	vertical-align: middle;
+}
+.remeber-label{
+	color:#131831;
+	font:12px "宋体";
+	padding-left:8px;
+}
+.wro{
+	display:block;
+	margin:2px 0 15px 0;
+	color:#F00;
+}
+.log{
+	margin:0 0 20px 0 ;
+	position:relative;
+}
+.log-input{
+	background: none repeat scroll 0 0 #4a61bc;
+	border-radius: 3px;
+	height: 47px;
+	transition: all 0.3s ease 0s;
+	width: 281px;
+	font:24px "黑体";
+	color:#fff;
+	cursor:pointer;
+}
+.telp{
+	position:absolute;
+	top:74px;
+	right:0;
+	font:12px "宋体";
+	color:#10142b;
+	text-decoration:none;
+}
+a.telp:hover{
+	text-decoration:underline;
+}
+/*foot*/
+.foot{
+	margin-top:28px;
+	width:1000px;
+	margin:auto;
+}
+.foot ul{
+	vertical-align:middle;
+}
+/*.foot ul li{
+	float:left;
+	margin-left:70px;
+	height:120px;
+	line-height:120px;
+	font:12px "宋体";
+	color:#5a5a5a;
+	overflow:hidden;
+}*/
+.foot ul li{
+	height:120px;
+	line-height:120px;
+	float:left;
+	font-size:12px;
+	color:#5a5a5a;
+	font-family:"宋体";
+	margin-left:70px;
+}
+dl{
+	width:120px;
+	height:120px;
+	text-align:center;
+}
+.foot li dt{
+	height:75px;
+	float:left;
+}
+.foot li dt dd{
+}

@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd ">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jasig.cas</groupId>
+    <artifactId>cas-overlay</artifactId>
+    <packaging>war</packaging>
+    <version>1.0</version>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.rimerosolutions.maven.plugins</groupId>
+                <artifactId>wrapper-maven-plugin</artifactId>
+                <version>0.0.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warName>cas-${maven.build.timestamp}</warName>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.jasig.cas</groupId>
+                            <artifactId>cas-server-webapp</artifactId>
+                            <excludes>
+                                <exclude>WEB-INF/cas.properties</exclude>
+                                <exclude>WEB-INF/classes/log4j2.xml</exclude>
+                                <exclude>WEB-INF/classes/services/HTTPSandIMAPS-10000001.json</exclude>
+                                <exclude>WEB-INF/classes/services/Apereo-10000002.json</exclude>
+                                <exclude>WEB-INF/view/jsp/protocol/2.0/casServiceValidationSuccess.jsp</exclude>
+                            </excludes>
+                        </overlay>
+                    </overlays>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/src/main/config/log4j/${environment}</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}/src/main/config/services/${environment}</directory>
+                            <targetPath>WEB-INF/classes/services</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>cas</finalName>
+
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>cas.properties</include>
+                </includes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>cas.properties</exclude>
+                </excludes>
+            </resource>
+
+        </resources>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.axet</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>0.0.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp</artifactId>
+            <version>${cas.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-jdbc</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-services</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-support</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-actions</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-cookie</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-validation</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-webflow</artifactId>
+            <version>${cas.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-logout</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<version>5.1.38</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+            <type>jar</type>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.microsoft</groupId>
+            <artifactId>sqljdbc</artifactId>
+            <version>4</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.8.1.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-support</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-webapp-throttle</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-rest</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-audit</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-core-logging</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-ldap</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-jwt</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.cas</groupId>
+            <artifactId>cas-server-support-jwt-integration-cas-legacy</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ldaptive</groupId>
+            <artifactId>ldaptive</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>javax.activation</groupId>-->
+            <!--<artifactId>activation</artifactId>-->
+            <!--<version>1.0.2</version>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <properties>
+        <cas.version>4.3.1-SNAPSHOT</cas.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>develop</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <environment>develop</environment>
+
+                <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
+                <db.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=GnSy</db.url>
+                <db.username>sa</db.username>
+                <db.password>12345678</db.password>
+                <!-- 用来查询用户手机号/邮箱的库连接-->
+                <db.hr.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=Gn_Hr</db.hr.url>
+
+                <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
+                <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
+
+                <cas.audit.db.hibernate.dialect>org.hibernate.dialect.SQLServerDialect</cas.audit.db.hibernate.dialect>
+
+                <redis.host>192.168.0.68</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.database>1</redis.database>
+                <redis.maxIdle>30</redis.maxIdle>
+                <redis.minIdle>10</redis.minIdle>
+                <redis.maxTotal>200</redis.maxTotal>
+                <redis.maxWaitMillis>120000</redis.maxWaitMillis>
+                <redis.testOnBorrow>true</redis.testOnBorrow>
+
+                <jwt.issuer>http://auth.dev.gionee.com</jwt.issuer>
+                <jwt.expirationInMinutes>10080</jwt.expirationInMinutes>
+                <jwt.refreshTokenExpirationInMinutes>20160</jwt.refreshTokenExpirationInMinutes>
+
+                <eoa.url>http://192.168.189.15:8082</eoa.url>
+                <new.eoa.url>http://192.168.189.15:8082</new.eoa.url>
+
+                <server.name>http://localhost:8080</server.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+
+            <properties>
+                <environment>test</environment>
+
+                <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
+                <db.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=GnSy</db.url>
+                <db.username>sa</db.username>
+                <db.password>12345678</db.password>
+                <!-- 用来查询用户手机号/邮箱的库连接-->
+                <db.hr.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=Gn_Hr</db.hr.url>
+
+                <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
+                <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
+
+                <cas.audit.db.hibernate.dialect>org.hibernate.dialect.SQLServerDialect</cas.audit.db.hibernate.dialect>
+
+                <redis.host>192.168.0.68</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.database>1</redis.database>
+                <redis.maxIdle>30</redis.maxIdle>
+                <redis.minIdle>10</redis.minIdle>
+                <redis.maxTotal>200</redis.maxTotal>
+                <redis.maxWaitMillis>3000</redis.maxWaitMillis>
+                <redis.testOnBorrow>true</redis.testOnBorrow>
+
+                <jwt.issuer>http://auth.go.gionee.com</jwt.issuer>
+                <jwt.expirationInMinutes>20160</jwt.expirationInMinutes>
+                <jwt.refreshTokenExpirationInMinutes>20160</jwt.refreshTokenExpirationInMinutes>
+
+                <eoa.url>http://eoa.go.gionee.com</eoa.url>
+                <new.eoa.url>http://new-eoa.go.gionee.com</new.eoa.url>
+
+                <server.name>http://auth.go.gionee.com</server.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>production</id>
+
+            <properties>
+                <environment>production</environment>
+
+                <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
+                <db.url>jdbc:sqlserver://16.6.10.17:1433;DatabaseName=GnSy</db.url>
+                <db.username>auth</db.username>
+                <db.password>dbmanager@2014</db.password>
+                <!-- 用来查询用户手机号/邮箱的库连接-->
+                <db.hr.url>jdbc:sqlserver://16.6.10.17:1433;DatabaseName=Gn_Hr</db.hr.url>
+
+                <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
+                <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
+
+                <cas.audit.db.hibernate.dialect>org.hibernate.dialect.SQLServerDialect</cas.audit.db.hibernate.dialect>
+
+                <redis.host>16.6.6.96</redis.host>
+                <redis.port>6379</redis.port>
+                <redis.database>20</redis.database>
+                <redis.maxIdle>30</redis.maxIdle>
+                <redis.minIdle>10</redis.minIdle>
+                <redis.maxTotal>200</redis.maxTotal>
+                <redis.maxWaitMillis>60000</redis.maxWaitMillis>
+                <redis.testOnBorrow>true</redis.testOnBorrow>
+
+                <jwt.issuer>https://auth.gionee.com</jwt.issuer>
+                <jwt.expirationInMinutes>20160</jwt.expirationInMinutes>
+                <jwt.refreshTokenExpirationInMinutes>20160</jwt.refreshTokenExpirationInMinutes>
+
+                <eoa.url>http://eoa.gionee.com</eoa.url>
+
+                <server.name>http://auth.gionee.com</server.name>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>shibboleth-releases</id>
+            <url>https://build.shibboleth.net/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>sonatype-releases</id>
+            <url>http://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+</project>

@@ -1,0 +1,41 @@
+{
+  "@class" : "org.jasig.cas.services.RegexRegisteredService",
+  "serviceId": "^(http|https)://(xst.gionee.com|eoa.gionee.com|mes.gionee.com|assp.gionee.com|hr.gionee.com|flow.gionee.com|pdm.gionee.com|mewms.gionee.com|gass.gionee.com|msg.gionee.com|wms.gionee.com|erp.gionee.com|gnerp.gionee.com|ppmm.gionee.com|ppmm2.gionee.com|ucrm.gionee.com|uaam.gionee.com|pms.gionee.com|crm.gionee.com|mes2.gionee.com|mes1.gionee.com|os.gionee.com|gz.gionee.com|mewms2.gionee.com|me.gionee.com|mes3.gionee.com|by.gionee.com|t-mcenter.gionee.com|meta.gionee.com|mcenter.gionee.com|iwms.gionee.com|sg.gionee.com|cloud.autotest.gionee.com|bos.gionee.com|file.gionee.com|autotest.gionee.com|neweoa.gionee.com|wx.gionee.com){1}(:\\d*)*(/.*)*$",
+  "name" : "GIONEE SERVICES",
+  "id" : 10000000,
+  "description" : "This service definition authorized all supported gionee services.",
+  "evaluationOrder" : 10000,
+  "usernameAttributeProvider" : {
+    "@class" : "org.jasig.cas.services.DefaultRegisteredServiceUsernameProvider"
+  },
+  "logoutType" : "BACK_CHANNEL",
+  "attributeReleasePolicy" : {
+    "@class" : "org.jasig.cas.services.ReturnAllAttributeReleasePolicy",
+    "principalAttributesRepository" : {
+      "@class" : "org.jasig.cas.authentication.principal.DefaultPrincipalAttributesRepository"
+    },
+    "authorizedToReleaseCredentialPassword" : false,
+    "authorizedToReleaseProxyGrantingTicket" : false
+  },
+  "accessStrategy" : {
+    "@class" : "org.jasig.cas.services.DefaultRegisteredServiceAccessStrategy",
+    "enabled" : true,
+    "ssoEnabled" : true
+  },
+  "proxyPolicy" : {
+    "@class" : "org.jasig.cas.services.RegexMatchingRegisteredServiceProxyPolicy",
+    "pattern" : "^http?://.*"
+  },
+  "properties": {
+    "@class": "java.util.HashMap",
+    "jwtSigningSecret": {
+      "@class": "org.jasig.cas.services.DefaultRegisteredServiceProperty",
+      "values": [
+        "java.util.HashSet",
+        [
+          "LdAdb6fbYNmvsC7AWmNcvWG2nVAdK9Ft/2SYoKd2fQnwyPhxaupOCwc46bMG0uHulqJJKZZc+gIRfnBOOkSVsA=="
+        ]
+      ]
+    }
+  }
+}

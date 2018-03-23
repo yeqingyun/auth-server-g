@@ -1,0 +1,29 @@
+{
+  "@class": "org.jasig.cas.services.RegexRegisteredService",
+  "serviceId": "^(http|https)://(eoa|eoa2|assp|mes|mes_oem|uaam|wms)+.go.gionee.com(:\\d*)*(.*).*$",
+  "name": "GIONEE SERVICES",
+  "id": 10000005,
+  "description": "This service definition authorized all supported gionee services.",
+  "evaluationOrder": 10000,
+  "usernameAttributeProvider": {
+    "@class": "org.jasig.cas.services.DefaultRegisteredServiceUsernameProvider"
+  },
+  "logoutType": "BACK_CHANNEL",
+  "attributeReleasePolicy": {
+    "@class": "org.jasig.cas.services.ReturnAllAttributeReleasePolicy",
+    "principalAttributesRepository": {
+      "@class": "org.jasig.cas.authentication.principal.DefaultPrincipalAttributesRepository"
+    },
+    "authorizedToReleaseCredentialPassword": false,
+    "authorizedToReleaseProxyGrantingTicket": false
+  },
+  "accessStrategy": {
+    "@class": "org.jasig.cas.services.DefaultRegisteredServiceAccessStrategy",
+    "enabled": true,
+    "ssoEnabled": true
+  },
+  "proxyPolicy": {
+    "@class": "org.jasig.cas.services.RegexMatchingRegisteredServiceProxyPolicy",
+    "pattern": "^http?://.*"
+  }
+}
