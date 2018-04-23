@@ -322,11 +322,11 @@
                 <environment>develop</environment>
 
                 <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
-                <db.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=GnSy</db.url>
-                <db.username>sa</db.username>
-                <db.password>12345678</db.password>
+                <db.url>secret</db.url>
+                <db.username>secret</db.username>
+                <db.password>secret</db.password>
                 <!-- 用来查询用户手机号/邮箱的库连接-->
-                <db.hr.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=Gn_Hr</db.hr.url>
+                <db.hr.url>secret</db.hr.url>
 
                 <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
                 <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
@@ -342,12 +342,12 @@
                 <redis.maxWaitMillis>120000</redis.maxWaitMillis>
                 <redis.testOnBorrow>true</redis.testOnBorrow>
 
-                <jwt.issuer>http://auth.dev.gionee.com</jwt.issuer>
+                <jwt.issuer>secret</jwt.issuer>
                 <jwt.expirationInMinutes>10080</jwt.expirationInMinutes>
                 <jwt.refreshTokenExpirationInMinutes>20160</jwt.refreshTokenExpirationInMinutes>
 
-                <eoa.url>http://192.168.189.15:8082</eoa.url>
-                <new.eoa.url>http://192.168.189.15:8082</new.eoa.url>
+                <eoa.url>secret</eoa.url>
+                <new.eoa.url>secret</new.eoa.url>
 
                 <server.name>http://localhost:8080</server.name>
             </properties>
@@ -360,19 +360,19 @@
                 <environment>test</environment>
 
                 <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
-                <db.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=GnSy</db.url>
-                <db.username>sa</db.username>
-                <db.password>12345678</db.password>
+                <db.url>secret</db.url>
+                <db.username>secret</db.username>
+                <db.password>secret</db.password>
                 <!-- 用来查询用户手机号/邮箱的库连接-->
-                <db.hr.url>jdbc:sqlserver://192.168.0.44:1433;DatabaseName=Gn_Hr</db.hr.url>
+                <db.hr.url>secret</db.hr.url>
 
                 <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
                 <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
 
                 <cas.audit.db.hibernate.dialect>org.hibernate.dialect.SQLServerDialect</cas.audit.db.hibernate.dialect>
 
-                <redis.host>192.168.0.68</redis.host>
-                <redis.port>6379</redis.port>
+                <redis.host>secret</redis.host>
+                <redis.port>secret</redis.port>
                 <redis.database>1</redis.database>
                 <redis.maxIdle>30</redis.maxIdle>
                 <redis.minIdle>10</redis.minIdle>
@@ -384,10 +384,10 @@
                 <jwt.expirationInMinutes>20160</jwt.expirationInMinutes>
                 <jwt.refreshTokenExpirationInMinutes>20160</jwt.refreshTokenExpirationInMinutes>
 
-                <eoa.url>http://eoa.go.gionee.com</eoa.url>
-                <new.eoa.url>http://new-eoa.go.gionee.com</new.eoa.url>
+                <eoa.url>secret</eoa.url>
+                <new.eoa.url>secret</new.eoa.url>
 
-                <server.name>http://auth.go.gionee.com</server.name>
+                <server.name>secret</server.name>
             </properties>
         </profile>
 
@@ -398,19 +398,19 @@
                 <environment>production</environment>
 
                 <db.driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</db.driver>
-                <db.url>jdbc:sqlserver://16.6.10.17:1433;DatabaseName=GnSy</db.url>
-                <db.username>auth</db.username>
-                <db.password>dbmanager@2014</db.password>
+                <db.url>secret</db.url>
+                <db.username>secret</db.username>
+                <db.password>secret</db.password>
                 <!-- 用来查询用户手机号/邮箱的库连接-->
-                <db.hr.url>jdbc:sqlserver://16.6.10.17:1433;DatabaseName=Gn_Hr</db.hr.url>
+                <db.hr.url>secret</db.hr.url>
 
                 <cas.jdbc.authn.query.sql>select pwd from usr where login = ?</cas.jdbc.authn.query.sql>
                 <cas.jdbc.person.attribute.sql>SELECT * FROM usr WHERE {0}</cas.jdbc.person.attribute.sql>
 
                 <cas.audit.db.hibernate.dialect>org.hibernate.dialect.SQLServerDialect</cas.audit.db.hibernate.dialect>
 
-                <redis.host>16.6.6.96</redis.host>
-                <redis.port>6379</redis.port>
+                <redis.host>secret</redis.host>
+                <redis.port>secret</redis.port>
                 <redis.database>20</redis.database>
                 <redis.maxIdle>30</redis.maxIdle>
                 <redis.minIdle>10</redis.minIdle>
@@ -424,7 +424,7 @@
 
                 <eoa.url>http://eoa.gionee.com</eoa.url>
 
-                <server.name>http://auth.gionee.com</server.name>
+                <server.name>secret</server.name>
             </properties>
         </profile>
     </profiles>
